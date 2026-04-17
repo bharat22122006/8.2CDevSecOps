@@ -38,7 +38,7 @@ pipeline {
             }
         }
 
-      stage('SonarCloud Analysis') {
+     stage('SonarCloud Analysis') {
     steps {
         bat '''
         if not exist sonar-scanner (
@@ -47,7 +47,7 @@ pipeline {
             for /d %%i in (sonar-scanner-*) do ren "%%i" sonar-scanner
         )
 
-        sonar-scanner\\bin\\sonar-scanner.bat -Dsonar.scanner.skipJreProvisioning=true
+        sonar-scanner\\bin\\sonar-scanner.bat -Dsonar.scanner.skipJreProvisioning=true -Dsonar.token=%SONAR_TOKEN%
         '''
     }
 }
