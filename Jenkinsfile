@@ -38,18 +38,18 @@ pipeline {
             }
         }
 
-        stage('SonarCloud Analysis') {
-            steps {
-                bat '''
-                if not exist sonar-scanner (
-                    powershell -Command "Invoke-WebRequest -Uri https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-6.0.0.4432-windows.zip -OutFile sonar-scanner.zip"
-                    powershell -Command "Expand-Archive -Path sonar-scanner.zip -DestinationPath ."
-                    for /d %%i in (sonar-scanner-*) do ren "%%i" sonar-scanner
-                )
+      stage('SonarCloud Analysis') {
+    steps {
+        bat '''
+        if not exist sonar-scanner (
+            powershell -Command "Invoke-WebRequest -Uri https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-5.0.1.3006-windows.zip -OutFile sonar-scanner.zip"
+            powershell -Command "Expand-Archive -Path sonar-scanner.zip -DestinationPath ."
+            for /d %%i in (sonar-scanner-*) do ren "%%i" sonar-scanner
+        )
 
-                sonar-scanner\\bin\\sonar-scanner.bat
-                '''
-            }
-        }
+        sonar-scanner\\bin\\sonar-scanner.bat -Dsonar.scanner.skipJreProvisioning=true
+        '''
+    }
+}
     }
 }
