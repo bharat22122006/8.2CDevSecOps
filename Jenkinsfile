@@ -4,6 +4,7 @@ pipeline {
     environment {
         PATH = "C:\\Program Files\\nodejs;${env.PATH}"
         SONAR_TOKEN = credentials('SONAR_TOKEN')
+        SONAR_SCANNER = "C:\\Users\\DELL\\OneDrive\\Documents\\Downloads\\sonar-scanner-cli-8.0.1.6346-windows-x64\\bin\\sonar-scanner.bat"
     }
 
     stages {
@@ -39,16 +40,7 @@ pipeline {
 
         stage('SonarCloud Analysis') {
             steps {
-                bat '''
-                if exist sonar-scanner rmdir /s /q sonar-scanner
-                if exist sonar-scanner.zip del /f /q sonar-scanner.zip
-
-                powershell -Command "Invoke-WebRequest -Uri https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-5.0.1.3006-windows.zip -OutFile sonar-scanner.zip"
-                powershell -Command "Expand-Archive -Path sonar-scanner.zip -DestinationPath ."
-                for /d %%i in (sonar-scanner-*) do ren "%%i" sonar-scanner
-
-                sonar-scanner\\bin\\sonar-scanner.bat -Dsonar.scanner.skipJreProvisioning=true -Dsonar.token=%SONAR_TOKEN% -X
-                '''
+                bat '"%SONAR_SCANNER%" -Dsonar.token=%SONAR_TOKEN% -X'
             }
         }
     }
