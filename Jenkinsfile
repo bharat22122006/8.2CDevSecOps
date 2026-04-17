@@ -45,10 +45,10 @@ pipeline {
                     curl -o sonar.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-windows.zip
                     powershell -Command "Expand-Archive sonar.zip -DestinationPath . -Force"
                     cd sonar-scanner-*/bin
-                    sonar-scanner.bat ^
-                    -Dsonar.projectKey=bharat22122006_8.2CDevSecOps ^
-                    -Dsonar.organization=bharat22122006 ^
-                    -Dsonar.host.url=https://sonarcloud.io ^
+                    sonar-scanner.bat 
+                    -Dsonar.projectKey=bharat22122006_8.2CDevSecOps
+                    -Dsonar.organization=bharat22122006 
+                    -Dsonar.host.url=https://sonarcloud.io 
                     -Dsonar.login=%SONAR_TOKEN%
                     '''
                 }
